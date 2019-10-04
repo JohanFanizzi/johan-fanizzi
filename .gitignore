@@ -1,0 +1,22 @@
+# Compiled output
+dist/
+
+# Dependence
+/node_modules
+
+# IDEs - editors - VSCode
+.env*
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+
+# misc
+npm-debug.log
+yarn-error.log
+typings
+
+# System Files
+.DS_Store
+Thumbs.db
