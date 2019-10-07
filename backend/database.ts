@@ -8,7 +8,8 @@ export default async function startConnection() {
       password: process.env.MONGODB_PASS as string
     },
     useNewUrlParser: true,
-    useUnifiedTopology: true
+    useUnifiedTopology: true,
+    useFindAndModify: false
   };
 
   try {
