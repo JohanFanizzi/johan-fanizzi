@@ -7,10 +7,19 @@ dist/
 # IDEs - editors - VSCode
 .env*
 .vscode/*
+.env.local
+.env.*.local
 !.vscode/settings.json
 !.vscode/tasks.json
 !.vscode/launch.json
 !.vscode/extensions.json
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
 
 # misc
 npm-debug.log
