@@ -5,8 +5,10 @@ import store from './store';
 import vuetify from './plugins/vuetify';
 import 'roboto-fontface/css/roboto/roboto-fontface.css';
 import '@mdi/font/css/materialdesignicons.css';
+import axios from 'axios';
 
 Vue.config.productionTip = false;
+axios.defaults.baseURL = process.env.VUE_APP_URL;
 
 new Vue({
   router,

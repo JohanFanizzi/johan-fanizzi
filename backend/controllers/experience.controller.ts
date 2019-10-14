@@ -5,29 +5,6 @@ import IExperience from '../interfaces/IExperience';
 import Experience from '../models/Experience';
 import Ability from '../models/Ability';
 
-export async function getPublicExperiences(req: Request, res: Response) {
-  try {
-    const populate: QueryPopulateOptions = {
-      path: Ability.collection.name,
-      match: {
-        public: { $gte: true }
-      },
-      options: {
-        sort: { order: 1 }
-      },
-      select: { _id: 0, name: 1, icon: 1 }
-    };
-    const experience: IExperience[] = await Experience.find({ public: true }).populate(populate).sort({ dateStart: 1 }).select({ public: 0, _id: 0, __v: 0 }) as IExperience[];
-
-    res.json({
-      data: experience
-    });
-  } catch(err) {
-    console.error(err);
-    return await ErrorException(false, err.message, req, res);
-  }
-}
-
 export async function getExperiences(req: Request, res: Response): Promise<Response> {
   try {
     const popute: QueryPopulateOptions = {

@@ -3,19 +3,6 @@ import Network from '../models/Network';
 import INetwork from '../interfaces/INetwork';
 import ErrorException from './error.controller';
 
-export async function getPublicNetworks(req: Request, res: Response): Promise<Response> {
-  try {
-    const networks: INetwork[] = await Network.find({ public: true }).sort({ order: 1 }).select({ public: 0, order: 0, _id: 0, __v: 0 }) as INetwork[];
-
-    return res.json({
-      data: networks
-    });
-  } catch (err) {
-    console.error(err);
-    return await ErrorException(false, err.message, req, res);
-  }
-}
-
 export async function getNetworks(req: Request, res: Response): Promise<Response> {
   try {
     const networks: INetwork[] = await Network.find().sort({ order: 1 }) as INetwork[];

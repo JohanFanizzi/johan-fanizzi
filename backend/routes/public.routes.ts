@@ -1,29 +1,20 @@
 import { Router } from 'express';
 const router = Router();
 
-import { getPublicNetworks } from '../controllers/network.controller';
+import {
+  getPublicNetworks, getPublicAbilities, getPublicEducations, getPublicExperiences, getPublicProject, getMyTimeline
+} from '../controllers/public.controller';
 
-router.route('/network')
-  .get(getPublicNetworks);
+router.route('/network').get(getPublicNetworks);
 
-import { getPublicAbilities } from '../controllers/ability,controller';
+router.route('/ability').get(getPublicAbilities);
 
-router.route('/ability')
-  .get(getPublicAbilities);
+router.route('/education').get(getPublicEducations);
 
-import { getPublicEducations } from '../controllers/education.controller';
+router.route('/experience').get(getPublicExperiences);
 
-router.route('/education')
-  .get(getPublicEducations);
+router.route('/my-timeline').get(getMyTimeline);
 
-import { getPublicExperiences } from '../controllers/experience.controller';
-
-router.route('/experience')
-  .get(getPublicExperiences);
-
-import { getPublicProject } from '../controllers/project.controller';
-
-router.route('/project')
-  .get(getPublicProject);
+router.route('/project').get(getPublicProject);
 
 export default router;

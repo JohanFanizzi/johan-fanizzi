@@ -5,19 +5,6 @@ import ErrorException from './error.controller';
 import Education from '../models/Education';
 import Experience from '../models/Experience';
 
-export async function getPublicAbilities(req: Request, res: Response): Promise<Response> {
-  try {
-    const abilities: IAbility[] = await Ability.find({ public: true }).sort({ order: 1 }).select({ public: 0, order: 0, _id: 0, __v: 0 }) as IAbility[];
-
-    return res.json({
-      data: abilities
-    });
-  } catch(err) {
-    console.error(err);
-    return await ErrorException(false, err.message, req, res);
-  }
-}
-
 export async function getAbilities(req: Request, res: Response): Promise<Response> {
   try {
     const abilities: IAbility[] = await Ability.find().sort({ order: 1 }) as IAbility[];
@@ -92,4 +79,3 @@ export async function updateAbility(req: Request, res: Response): Promise<Respon
     return await ErrorException(false, err.message, req, res);
   }
 }
-

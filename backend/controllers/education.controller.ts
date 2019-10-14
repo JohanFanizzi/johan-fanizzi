@@ -5,29 +5,6 @@ import Education from '../models/Education';
 import Ability from '../models/Ability';
 import { QueryPopulateOptions } from 'mongoose';
 
-export async function getPublicEducations(req: Request, res: Response): Promise<Response> {
-  try {
-    const populate: QueryPopulateOptions = {
-      path: Ability.collection.name,
-      match: {
-        public: { $gte: true }
-      },
-      options: {
-        sort: { order: 1 }
-      },
-      select: { _id: 0, name: 1, icon: 1 }
-    };
-    const educations: IEducation[] = await Education.find({ public: true }).populate(populate).sort({ dateStart: 1 }).select({ public: 0, _id: 0, __v: 0 }) as IEducation[];
-
-    return res.json({
-      data: educations
-    });
-  } catch(err) {
-    console.error(err);
-    return await ErrorException(false, err.message, req, res);
-  }
-}
-
 export async function getEducations(req: Request, res: Response): Promise<Response> {
   try {
     const popute: QueryPopulateOptions = {

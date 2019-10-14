@@ -1,34 +1,43 @@
 <template>
   <v-app>
-    <v-app-bar app>
-      <v-toolbar-title class="headline text-uppercase">
-        <span>Vuetify</span>
-        <span class="font-weight-light">MATERIAL DESIGN</span>
-      </v-toolbar-title>
-      <v-spacer></v-spacer>
-      <v-btn
-        text
-        href="https://github.com/vuetifyjs/vuetify/releases/latest"
-        target="_blank"
-      >
-        <span class="mr-2">Latest Release</span>
-        <v-icon>mdi-open-in-new</v-icon>
-      </v-btn>
-    </v-app-bar>
+    <navbar></navbar>
 
     <v-content>
       <router-view/>
     </v-content>
+
+    <v-footer color="primary" dark class="py-4 text-center">
+      <networks></networks>
+    </v-footer>
   </v-app>
 </template>
 
+<style lang="scss">
+.v-application{
+  background-color: var(--v-secondary-base) !important;
+}
+</style>
+
 <script lang="ts">
 import Vue from 'vue';
+import { mapActions } from 'vuex';
+import Navbar from './components/Navbar.vue';
+import Networks from './components/Networks.vue';
 
 export default Vue.extend({
   name: 'App',
+  components: {
+    Navbar,
+    Networks,
+  },
   data: () => ({
     //
   }),
+  created() {
+    this.loadNetworks();
+  },
+  methods: {
+    ...mapActions(['loadNetworks']),
+  },
 });
 </script>
