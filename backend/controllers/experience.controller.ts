@@ -1,19 +1,22 @@
 import { Request, Response } from 'express';
 import ErrorException from './error.controller';
-import { QueryPopulateOptions } from 'mongoose';
 import IExperience from '../interfaces/IExperience';
 import Experience from '../models/Experience';
-import Ability from '../models/Ability';
+import { getAbilityPopulate } from './ability.controller';
 
 export async function getExperiences(req: Request, res: Response): Promise<Response> {
   try {
-    const popute: QueryPopulateOptions = {
-      path: Ability.collection.name,
-      options: {
-        sort: { order: 1 }
-      }
-    };
-    const experiences: IExperience[] = await Experience.find().sort({ dateStart: 1 }).populate(popute) as IExperience[];
+    // comprobar si el middleware ha añadido filtros, estos se añades para las rutas publicas
+    const filter: {} = res.locals.filter;
+    const filterPopulate: {} = res.locals.filterPopulate;
+    const select: {} = res.locals.select;
+
+    // Obtener los datos, si no existen filtro o el select se obtiene todo
+    const experiences: IExperience[] = await Experience
+      .find(filter)
+      .sort({ dateStart: 1 })
+      .populate(getAbilityPopulate(filterPopulate, select))
+      .select(select) as IExperience[];
 
     return res.json({
       data: experiences
@@ -26,14 +29,10 @@ export async function getExperiences(req: Request, res: Response): Promise<Respo
 
 export async function getExperience(req: Request, res: Response): Promise<Response> {
   try {
-    const popute: QueryPopulateOptions = {
-      path: Ability.collection.name,
-      options: {
-        sort: { order: 1 }
-      }
-    };
     const id: string = req.params.id;
-    const experience: IExperience = await Experience.findById(id).populate(popute) as IExperience;
+    const experience: IExperience = await Experience
+      .findById(id)
+      .populate(getAbilityPopulate()) as IExperience;
 
     return res.json({
       data: experience

@@ -5,7 +5,15 @@ import ErrorException from './error.controller';
 
 export async function getNetworks(req: Request, res: Response): Promise<Response> {
   try {
-    const networks: INetwork[] = await Network.find().sort({ order: 1 }) as INetwork[];
+    // comprobar si el middleware ha añadido filtros, estos se añades para las rutas publicas
+    const filter: {} = res.locals.filter;
+    const select: {} = res.locals.select;
+
+    // Obtener los datos, si no existen filtro o el select se obtiene todo
+    const networks: INetwork[] = await Network
+      .find(filter ? filter : {})
+      .sort({ order: 1 })
+      .select(select ? select : {}) as INetwork[];
 
     return res.json({
       data: networks

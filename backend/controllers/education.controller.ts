@@ -2,18 +2,21 @@ import { Request, Response } from 'express';
 import ErrorException from './error.controller';
 import IEducation from '../interfaces/IEducation';
 import Education from '../models/Education';
-import Ability from '../models/Ability';
-import { QueryPopulateOptions } from 'mongoose';
+import { getAbilityPopulate } from './ability.controller';
 
 export async function getEducations(req: Request, res: Response): Promise<Response> {
   try {
-    const popute: QueryPopulateOptions = {
-      path: Ability.collection.name,
-      options: {
-        sort: { order: 1 }
-      }
-    };
-    const educations: IEducation[] = await Education.find().populate(popute).sort({ dateStart: 1 }) as IEducation[];
+    // comprobar si el middleware ha añadido filtros, estos se añades para las rutas publicas
+    const filter: {} = res.locals.filter;
+    const filterPopulate: {} = res.locals.filterPopulate;
+    const select: {} = res.locals.select;
+
+    // Obtener los datos, si no existen filtro o el select se obtiene todo
+    const educations: IEducation[] = await Education
+      .find(filter)
+      .populate(getAbilityPopulate(filterPopulate, select))
+      .sort({ dateStart: 1 })
+      .select(select) as IEducation[];
 
     return res.json({
       data: educations
@@ -27,13 +30,9 @@ export async function getEducations(req: Request, res: Response): Promise<Respon
 export async function getEducation(req: Request, res: Response): Promise<Response> {
   try {
     const id: string = req.params.id;
-    const popute: QueryPopulateOptions = {
-      path: Ability.collection.name,
-      options: {
-        sort: { order: 1 }
-      }
-    };
-    const education: IEducation = await Education.findById(id).populate(popute) as IEducation;
+    const education: IEducation = await Education
+      .findById(id)
+      .populate(getAbilityPopulate()) as IEducation;
 
     return res.json({
       data: education

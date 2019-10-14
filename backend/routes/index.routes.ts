@@ -16,7 +16,7 @@ router.route('/network/:id')
 
 import {
   getAbilities, createAbility, getAbility, updateAbility, deleteAbility
-} from '../controllers/ability,controller';
+} from '../controllers/ability.controller';
 
 router.route('/ability')
   .get(getAbilities)

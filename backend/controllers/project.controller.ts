@@ -1,19 +1,22 @@
 import { Request, Response } from 'express';
 import ErrorException from './error.controller';
-import { QueryPopulateOptions } from 'mongoose';
-import Ability from '../models/Ability';
 import IProject from '../interfaces/IProject';
 import Project from '../models/Project';
+import { getAbilityPopulate } from './ability.controller';
 
 export async function getProjects(req: Request, res: Response): Promise<Response> {
   try {
-    const populate: QueryPopulateOptions = {
-      path: Ability.collection.name,
-      options: {
-        sort: { order: 1 }
-      }
-    };
-    const project: IProject[] = await Project.find().populate(populate).sort({ order: 1 }) as IProject[];
+    // comprobar si el middleware ha añadido filtros, estos se añades para las rutas publicas
+    const filter: {} = res.locals.filter;
+    const filterPopulate: {} = res.locals.filterPopulate;
+    const select: {} = res.locals.select;
+
+    // Obtener los datos, si no existen filtro o el select se obtiene todo
+    const project: IProject[] = await Project
+      .find(filter)
+      .populate(getAbilityPopulate(filterPopulate, select))
+      .sort({ order: 1 })
+      .select(select) as IProject[];
 
     return res.json({
       data: project
@@ -27,13 +30,9 @@ export async function getProjects(req: Request, res: Response): Promise<Response
 export async function getProject(req: Request, res: Response): Promise<Response> {
   try {
     const id: string = req.params.id;
-    const populate: QueryPopulateOptions = {
-      path: Ability.collection.name,
-      options: {
-        sort: { order: 1 }
-      }
-    };
-    const project: IProject = await Project.findById(id).populate(populate) as IProject;
+    const project: IProject = await Project
+      .findById(id)
+      .populate(getAbilityPopulate()) as IProject;
 
     return res.json({
       data: project
