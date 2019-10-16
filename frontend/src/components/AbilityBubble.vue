@@ -7,7 +7,10 @@
       v-for="(ability, index) in abilities" :key="index"
     >
       <template v-slot:activator="{ on }">
-        <v-icon exact color="primary" class="ma-1" v-on="on">
+        <v-icon
+          exact color="primary" class="ma-1" v-on="on"
+          @click="filterAbility(ability)"
+        >
           {{ ability.icon }}
         </v-icon>
       </template>
@@ -17,6 +20,12 @@
   </v-card-text>
 </v-card>
 </template>
+
+<style lang="scss" scoped>
+.ability {
+  border-radius: 70px;
+}
+</style>
 
 <script lang="ts">
 import Vue from 'vue';
@@ -28,7 +37,7 @@ export default Vue.extend({
     ...mapState(['abilities']),
   },
   methods: {
-    ...mapActions(['loadAbilities']),
+    ...mapActions(['loadAbilities', 'filterAbility']),
   },
   created() {
     this.loadAbilities();

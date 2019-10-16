@@ -21,12 +21,7 @@
 
       <v-card-actions>
         <v-container>
-          <v-chip
-            pill color="primary" class="ma-1"
-            v-for="(ability, index) in experience.abilities" :key="index">
-            <v-avatar left color="accent"><v-icon>{{ ability.icon }}</v-icon></v-avatar>
-            {{ ability.name }}
-          </v-chip>
+          <ability-chip :abilities="experience.abilities"></ability-chip>
         </v-container>
       </v-card-actions>
     </v-card>
@@ -38,9 +33,13 @@
 import Vue from 'vue';
 import { mapState, mapActions } from 'vuex';
 import { getDateString } from '../lib/Utility';
+import AbilityChip from '../components/AbilityChip.vue';
 
 export default Vue.extend({
   name: 'Experience',
+  components: {
+    AbilityChip,
+  },
   computed: {
     ...mapState(['experiences']),
   },

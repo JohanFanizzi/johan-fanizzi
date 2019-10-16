@@ -19,6 +19,7 @@ function middlewarePublicConfig(req: Request, res: Response, next: NextFunction)
 
   // Filtro para las clases que contienen información de las habilidades
   res.locals.filterPopulate = { public: true };
+  res.locals.selectPopulate = { public: 0, order: 0, __v: 0 };
 
   // Para poder realizar filtros sobre las habilidades se tiene que devolver el ID, para el resto no hace falta
   if(req.path.includes('/ability')) {

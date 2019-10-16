@@ -9,12 +9,13 @@ export async function getEducations(req: Request, res: Response): Promise<Respon
     // comprobar si el middleware ha añadido filtros, estos se añades para las rutas publicas
     const filter: {} = res.locals.filter;
     const filterPopulate: {} = res.locals.filterPopulate;
+    const selectPopulate: {} = res.locals.selectPopulate;
     const select: {} = res.locals.select;
 
     // Obtener los datos, si no existen filtro o el select se obtiene todo
     const educations: IEducation[] = await Education
       .find(filter)
-      .populate(getAbilityPopulate(filterPopulate, select))
+      .populate(getAbilityPopulate(filterPopulate, selectPopulate))
       .sort({ dateStart: -1 })
       .select(select) as IEducation[];
 

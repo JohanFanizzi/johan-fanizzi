@@ -13,7 +13,18 @@
         {{ elment.title }}
       </v-card-title>
       <v-card-text>
-        {{ elment.description }}
+        <v-container>
+          <v-row class="flex-nowrap">
+            <v-col cols="9">
+              {{ elment.description }}
+            </v-col>
+            <v-col cols="3" class="text-right">
+              <router-link to="cv">
+                <v-icon color="accent">mdi-file-document-box-multiple</v-icon>
+              </router-link>
+            </v-col>
+          </v-row>
+        </v-container>
       </v-card-text>
     </v-card>
   </v-timeline-item>

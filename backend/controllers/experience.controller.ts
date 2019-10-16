@@ -9,13 +9,14 @@ export async function getExperiences(req: Request, res: Response): Promise<Respo
     // comprobar si el middleware ha añadido filtros, estos se añades para las rutas publicas
     const filter: {} = res.locals.filter;
     const filterPopulate: {} = res.locals.filterPopulate;
+    const selectPopulate: {} = res.locals.selectPopulate;
     const select: {} = res.locals.select;
 
     // Obtener los datos, si no existen filtro o el select se obtiene todo
     const experiences: IExperience[] = await Experience
       .find(filter)
       .sort({ dateStart: -1 })
-      .populate(getAbilityPopulate(filterPopulate, select))
+      .populate(getAbilityPopulate(filterPopulate, selectPopulate))
       .select(select) as IExperience[];
 
     return res.json({

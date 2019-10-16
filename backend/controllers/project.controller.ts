@@ -9,12 +9,13 @@ export async function getProjects(req: Request, res: Response): Promise<Response
     // comprobar si el middleware ha añadido filtros, estos se añades para las rutas publicas
     const filter: {} = res.locals.filter;
     const filterPopulate: {} = res.locals.filterPopulate;
+    const selectPopulate: {} = res.locals.selectPopulate;
     const select: {} = res.locals.select;
 
     // Obtener los datos, si no existen filtro o el select se obtiene todo
     const project: IProject[] = await Project
       .find(filter)
-      .populate(getAbilityPopulate(filterPopulate, select))
+      .populate(getAbilityPopulate(filterPopulate, selectPopulate))
       .sort({ order: 1 })
       .select(select) as IProject[];
 

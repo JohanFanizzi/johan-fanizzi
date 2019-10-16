@@ -1,9 +1,5 @@
 <template>
-<v-sheet width="100%" height="100%" class="py-12 mt-12 text-center" color="secondary" dark>
-  <v-container>
-    <projects></projects>
-  </v-container>
-</v-sheet>
+<projects></projects>
 </template>
 
 <script lang="ts">
