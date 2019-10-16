@@ -15,7 +15,7 @@ export async function getEducations(req: Request, res: Response): Promise<Respon
     const educations: IEducation[] = await Education
       .find(filter)
       .populate(getAbilityPopulate(filterPopulate, select))
-      .sort({ dateStart: 1 })
+      .sort({ dateStart: -1 })
       .select(select) as IEducation[];
 
     return res.json({

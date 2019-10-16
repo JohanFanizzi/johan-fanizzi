@@ -60,8 +60,14 @@ export async function getAbility(req: Request, res: Response): Promise<Response>
 export async function getMyTimeline(req: Request, res: Response): Promise<Response> {
   try {
     const timeline: { title: string, description: string, date: Date, education: boolean }[] = [];
+    // comprobar si el middleware ha añadido filtros, estos se añades para las rutas publicas
+    const filter: {} = res.locals.filter;
 
-    const education: IEducation[] = await Education.find({ public: true }).sort({ order: 1 }).select({ _id: 0, institution: 1, degree: 1, dateStart: 1 });
+    const education: IEducation[] = await Education
+      .find(filter)
+      .sort({ order: 1 })
+      .select({ _id: 0, institution: 1, degree: 1, dateStart: 1 });
+
     education.map((element) => timeline.push({
       title: element.institution,
       description: element.degree,
@@ -69,7 +75,11 @@ export async function getMyTimeline(req: Request, res: Response): Promise<Respon
       education: true
     }));
 
-    const experience: IExperience[] = await Experience.find({ public: true }).sort({ order: 1 }).select({ _id: 0, company: 1, position: 1, dateStart: 1 });
+    const experience: IExperience[] = await Experience
+      .find(filter)
+      .sort({ order: 1 })
+      .select({ _id: 0, company: 1, position: 1, dateStart: 1 });
+
     experience.map((element) => timeline.push({
       title: element.company,
       description: element.position,

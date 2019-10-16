@@ -13,11 +13,12 @@
           {{ experience.company }} - {{ getDateString(new Date(experience.dateStart)) }} - {{ experience.dateEnd ? getDateString(new Date(experience.dateEnd)) : 'Actualidad' }}
         </div>
       </v-card-title>
+
       <v-card-text class="text-left px-12">
-        <v-container>
-          <p>{{ experience.description }}</p>
+        <v-container v-html="experience.description">
         </v-container>
       </v-card-text>
+
       <v-card-actions>
         <v-container>
           <v-chip

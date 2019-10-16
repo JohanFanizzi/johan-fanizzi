@@ -14,7 +14,7 @@ export async function getExperiences(req: Request, res: Response): Promise<Respo
     // Obtener los datos, si no existen filtro o el select se obtiene todo
     const experiences: IExperience[] = await Experience
       .find(filter)
-      .sort({ dateStart: 1 })
+      .sort({ dateStart: -1 })
       .populate(getAbilityPopulate(filterPopulate, select))
       .select(select) as IExperience[];
 

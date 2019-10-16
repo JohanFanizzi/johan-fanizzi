@@ -42,5 +42,6 @@ router.route('/my-timeline').get(getMyTimeline);
 router.route('/education/:abilityId').get(middlewarePublicConfig, getEducations);
 router.route('/experience/:abilityId').get(middlewarePublicConfig, getExperiences);
 router.route('/project/:abilityId').get(middlewarePublicConfig, getProjects);
+router.route('/my-timeline/:abilityId').get(middlewarePublicConfig, getMyTimeline);
 
 export default router;
