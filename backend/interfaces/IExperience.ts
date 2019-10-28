@@ -8,5 +8,5 @@ export default interface IExperience extends Document {
   dateStart: Date;
   dateEnd: Date;
   abilities: IAbility[];
-  public: boolean;
+  isPublic: boolean;
 }

@@ -7,5 +7,5 @@ export default interface IProject extends Document {
   url: string;
   abilities: IAbility[];
   order: number;
-  public: boolean;
+  isPublic: boolean;
 }

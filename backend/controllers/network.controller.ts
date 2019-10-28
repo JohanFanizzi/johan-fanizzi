@@ -1,19 +1,20 @@
 import { Request, Response } from 'express';
+import ErrorException from './error.controller';
+import { validate, networkSchema } from '../libs/joi';
 import Network from '../models/Network';
 import INetwork from '../interfaces/INetwork';
-import ErrorException from './error.controller';
 
 export async function getNetworks(req: Request, res: Response): Promise<Response> {
   try {
     // comprobar si el middleware ha añadido filtros, estos se añades para las rutas publicas
-    const filter: {} = res.locals.filter;
-    const select: {} = res.locals.select;
+    const filter: {} = req.filter ? req.filter : {};
+    const select: {} = req.select ? req.select : {};
 
-    // Obtener los datos, si no existen filtro o el select se obtiene todo
+    // Obtener los datos
     const networks: INetwork[] = await Network
-      .find(filter ? filter : {})
+      .find(filter)
       .sort({ order: 1 })
-      .select(select ? select : {}) as INetwork[];
+      .select(select) as INetwork[];
 
     return res.json({
       data: networks
@@ -26,7 +27,10 @@ export async function getNetworks(req: Request, res: Response): Promise<Response
 
 export async function getNetwork(req: Request, res: Response): Promise<Response> {
   try  {
+    // Obtener id
     const id: string = req.params.id;
+
+    // Buscar redes sociales
     const network: INetwork = await Network.findById(id) as INetwork;
 
     return res.json({
@@ -40,6 +44,13 @@ export async function getNetwork(req: Request, res: Response): Promise<Response>
 
 export async function createNetwrok(req: Request, res: Response): Promise<Response> {
   try  {
+    // Validar campos
+    const { error } = validate(req.body, networkSchema);
+    if(error) {
+      return await ErrorException(true, error.message, req, res, 400);
+    }
+
+    // Create Network
     const data: INetwork = req.body;
     const network: INetwork = new Network(data) as INetwork;
     await network.save();
@@ -56,7 +67,10 @@ export async function createNetwrok(req: Request, res: Response): Promise<Respon
 
 export async function deleteNetwork(req: Request, res: Response): Promise<Response> {
   try  {
+    // Obtener id
     const id: string = req.params.id;
+
+    // Eliminar red social
     await Network.findByIdAndRemove(id);
 
     return res.json({
@@ -70,6 +84,13 @@ export async function deleteNetwork(req: Request, res: Response): Promise<Respon
 
 export async function updateNetwork(req: Request, res: Response): Promise<Response> {
   try  {
+    // Validar campos
+    const { error } = validate(req.body, networkSchema);
+    if(error) {
+      return await ErrorException(true, error.message, req, res, 400);
+    }
+
+    // Actualizar datos de
     const id: string = req.params.id;
     const data: INetwork = req.body as INetwork;
     const network: INetwork = await Network.findByIdAndUpdate(id, data, { new: true }) as INetwork;

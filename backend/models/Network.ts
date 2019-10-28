@@ -8,20 +8,24 @@ const schema: Schema = new Schema({
   },
   url: {
     type: String,
+    lowercase: true,
     required: true
   },
   icon: {
     type: String,
+    lowercase: true,
     required: true
   },
   order: {
     type: Number,
     default: 0
   },
-  public: {
+  isPublic: {
     type: String,
     default: false
   }
+}, {
+  timestamps: true
 });
 
 export default model<INetwork>('Network', schema);

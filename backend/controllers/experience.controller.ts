@@ -1,5 +1,6 @@
 import { Request, Response } from 'express';
 import ErrorException from './error.controller';
+import { validate, experienceSchema } from '../libs/joi';
 import IExperience from '../interfaces/IExperience';
 import Experience from '../models/Experience';
 import { getAbilityPopulate } from './ability.controller';
@@ -7,12 +8,12 @@ import { getAbilityPopulate } from './ability.controller';
 export async function getExperiences(req: Request, res: Response): Promise<Response> {
   try {
     // comprobar si el middleware ha añadido filtros, estos se añades para las rutas publicas
-    const filter: {} = res.locals.filter;
-    const filterPopulate: {} = res.locals.filterPopulate;
-    const selectPopulate: {} = res.locals.selectPopulate;
-    const select: {} = res.locals.select;
+    const filter: {} = req.filter ? req.filter : {};
+    const filterPopulate: {} = req.populate ? req.populate.filter : {};
+    const selectPopulate: {} = req.populate ? req.populate.select : {};
+    const select: {} = req.select ? req.select : {};
 
-    // Obtener los datos, si no existen filtro o el select se obtiene todo
+    // Obtener los datos
     const experiences: IExperience[] = await Experience
       .find(filter)
       .sort({ dateStart: -1 })
@@ -30,7 +31,10 @@ export async function getExperiences(req: Request, res: Response): Promise<Respo
 
 export async function getExperience(req: Request, res: Response): Promise<Response> {
   try {
+    // Obtener ID
     const id: string = req.params.id;
+
+    // Buscar experiencia
     const experience: IExperience = await Experience
       .findById(id)
       .populate(getAbilityPopulate()) as IExperience;
@@ -46,6 +50,13 @@ export async function getExperience(req: Request, res: Response): Promise<Respon
 
 export async function createExperience(req: Request, res: Response): Promise<Response> {
   try {
+    // Validar campos
+    const { error } = validate(req.body, experienceSchema);
+    if(error) {
+      return await ErrorException(true, error.message, req, res, 400);
+    }
+
+    // Crear Experiencia
     const data: IExperience = req.body;
     const experience: IExperience = new Experience(data);
     await experience.save();
@@ -62,7 +73,10 @@ export async function createExperience(req: Request, res: Response): Promise<Res
 
 export async function deleteExperience(req: Request, res: Response): Promise<Response> {
   try {
+    // Obtener ID
     const id: string = req.params.id;
+
+    // Eliminar Experiencia
     await Experience.findByIdAndRemove(id);
 
     return res.json({
@@ -76,6 +90,13 @@ export async function deleteExperience(req: Request, res: Response): Promise<Res
 
 export async function updateExperience(req: Request, res: Response): Promise<Response> {
   try {
+    // Validar campos
+    const { error } = validate(req.body, experienceSchema);
+    if(error) {
+      return await ErrorException(true, error.message, req, res, 400);
+    }
+
+    // Actualizar Experiencia
     const id: string = req.params.id;
     const data: IExperience = req.body;
     const experience: IExperience = await Experience.findByIdAndUpdate(id, data, { new: true }) as IExperience;

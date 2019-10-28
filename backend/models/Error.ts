@@ -2,7 +2,10 @@ import { Schema, model } from 'mongoose';
 import IError from '../interfaces/IError';
 
 const schema: Schema = new Schema({
-  message: String,
+  message: {
+    type: String,
+    required: true
+  },
   data: {
     url: String,
     ip: String,
@@ -12,11 +15,12 @@ const schema: Schema = new Schema({
     params: String,
     body: String
   },
-  controlled: Boolean,
-  date: {
-    type: Date,
-    default: Date.now
+  controlled: {
+    type: Boolean,
+    default: false
   }
+}, {
+  timestamps: true
 });
 
 export default model<IError>('Error', schema)

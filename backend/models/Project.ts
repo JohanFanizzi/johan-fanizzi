@@ -22,10 +22,12 @@ const schema: Schema = new Schema({
     type: Number,
     default: 0
   },
-  public: {
+  isPublic: {
     type: Boolean,
     default: false
   }
+}, {
+  timestamps: true
 });
 
 export default model<IProject>('Project', schema);

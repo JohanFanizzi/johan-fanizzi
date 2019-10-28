@@ -8,16 +8,19 @@ const schema: Schema = new Schema({
   },
   icon: {
     type: String,
+    lowercase: true,
     required: true
   },
   order: {
     type: Number,
     default: 0
   },
-  public: {
+  isPublic: {
     type: Boolean,
     default: false
   }
+}, {
+  timestamps: true
 });
 
 export default model<IAbility>('Ability', schema);

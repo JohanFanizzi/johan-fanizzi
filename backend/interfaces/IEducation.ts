@@ -8,5 +8,5 @@ export default interface IEducation extends Document {
   dateStart: Date;
   dateEnd: Date;
   abilities: IAbility[];
-  public: boolean;
+  isPublic: boolean;
 }

@@ -6,25 +6,25 @@ import router from './routes/index.routes';
 import history from 'connect-history-api-fallback';
 import path from 'path';
 
-// Initializations
+// Inicializaciones
 const app = express();
 dotenv.config();
 
-// Setting
+// Configuración
 app.set('port', process.env.PORT || 3000);
 
 // Middlewares
 app.use(express.json());
 app.use(cors());
 
-// Routes
+// Rutas
 app.use('/public', publicRouter);
 app.use('/api', router);
 
 // Middlewares Vue History
 app.use(history());
 
-// Static Files
+// Ficheros Estaticos
 app.use(express.static(path.join(__dirname, '..', '/dist/public')));
 
 export default app;

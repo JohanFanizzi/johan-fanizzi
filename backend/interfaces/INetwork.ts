@@ -5,5 +5,5 @@ export default interface INetwork extends Document {
   url: string;
   icon: string;
   order: number;
-  public: string;
+  isPublic: string;
 }

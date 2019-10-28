@@ -1,14 +1,17 @@
 import { Request, Response } from 'express';
-import IError from '../interfaces/IError';
 import Error from '../models/Error';
-import { IErrorData } from '../interfaces/IError';
+import IError, { IErrorData } from '../interfaces/IError';
 
+// Control y registro de errores
 export default async function ErrorException(controlled: boolean, errMessage: string, req: Request, res: Response, errorCode?: number): Promise<Response> {
+  // Mensaje de error para enviar al front
   let message: string = '';
 
+  // Si es un error no controlado, se registra y se envia un mensaje estandar
   if(!controlled) {
     message = 'An unexpected error has ocurred.';
 
+    // Registrar error
     const error: IError = new Error();
     error.message = errMessage;
     error.data = {
@@ -24,6 +27,7 @@ export default async function ErrorException(controlled: boolean, errMessage: st
 
     await error.save();
   } else {
+    // Si es controlado, no se registra y se devuelve el mensaje
     message = errMessage;
   }
 

@@ -4,7 +4,6 @@ export default interface IError extends Document {
   message: string;
   data: IErrorData;
   controlled: boolean;
-  date?: Date;
 }
 
 export interface IErrorData extends Document {

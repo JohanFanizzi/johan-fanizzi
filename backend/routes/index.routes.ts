@@ -1,6 +1,7 @@
 import { Router } from 'express';
 const router = Router();
 
+// Redes Sociales
 import {
   getNetworks, createNetwrok, getNetwork, updateNetwork, deleteNetwork
 } from '../controllers/network.controller';
@@ -14,6 +15,7 @@ router.route('/network/:id')
   .put(updateNetwork)
   .delete(deleteNetwork);
 
+// Habilidades
 import {
   getAbilities, createAbility, getAbility, updateAbility, deleteAbility
 } from '../controllers/ability.controller';
@@ -27,6 +29,7 @@ router.route('/ability/:id')
   .put(updateAbility)
   .delete(deleteAbility);
 
+// Educación
 import {
   getEducations, createEducation, getEducation, updateEducation, deleteEducation
 } from '../controllers/education.controller';
@@ -40,6 +43,7 @@ router.route('/education/:id')
   .put(updateEducation)
   .delete(deleteEducation);
 
+// Experiencia
 import {
   getExperiences, createExperience, getExperience, updateExperience, deleteExperience
 } from '../controllers/experience.controller';
@@ -53,6 +57,7 @@ router.route('/experience/:id')
   .put(updateExperience)
   .delete(deleteExperience);
 
+// Proyectos
 import {
   getProjects, createProject, getProject, deleteProject, updateProject
 } from '../controllers/project.controller';

@@ -25,10 +25,12 @@ const schema: Schema = new Schema({
     type: Schema.Types.ObjectId,
     ref: 'Ability'
   }],
-  public: {
+  isPublic: {
     type: Boolean,
     default: false
   }
+}, {
+  timestamps: true
 });
 
 export default model<IExperience>('Experience', schema);

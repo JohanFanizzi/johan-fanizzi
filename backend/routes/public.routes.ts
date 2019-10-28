@@ -9,23 +9,25 @@ import { getProjects } from '../controllers/project.controller';
 
 // Función para añadir el filtro public y eliminar campos internos
 function middlewarePublicConfig(req: Request, res: Response, next: NextFunction) {
-  // Si se recibe un Ability ID es que se están filtrando la educación, experiencia o projectos.
+  // Si se recibe un Ability ID es que se está realizando un filtro.
   if(req.params.abilityId) {
-    res.locals.filter = { public: true, abilities: req.params.abilityId };
+    req.filter = { isPublic: true, abilities: req.params.abilityId };
   } else {
-    // Se siltros los datos para solo optener los publicos
-    res.locals.filter = { public: true };
+    // Se filtran los datos para optener los datos publicos
+    req.filter = { isPublic: true };
   }
 
   // Filtro para las clases que contienen información de las habilidades
-  res.locals.filterPopulate = { public: true };
-  res.locals.selectPopulate = { public: 0, order: 0, __v: 0 };
+  req.populate = {
+    filter: { isPublic: true },
+    select: { isPublic: 0, order: 0, __v: 0 }
+  };
 
   // Para poder realizar filtros sobre las habilidades se tiene que devolver el ID, para el resto no hace falta
   if(req.path.includes('/ability')) {
-    res.locals.select = { public: 0, order: 0, __v: 0 };
+    req.select = { isPublic: 0, order: 0, __v: 0 };
   } else {
-    res.locals.select = { public: 0, order: 0, _id: 0, __v: 0 };
+    req.select = { isPublic: 0, order: 0, _id: 0, __v: 0 };
   }
 
   next();
