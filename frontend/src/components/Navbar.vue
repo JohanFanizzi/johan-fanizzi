@@ -8,8 +8,8 @@
         <template v-slot:activator="{ on }">
           <v-btn dark text icon v-on="on">
             <v-img
-              :src="require('../assets/logo.svg')"
-              contain height="30" class="ma-0 pa-0" width="50" max-width="50"
+              :src="require('../assets/logo.png')"
+              contain height="50" class="ma-0 pa-0" width="50" max-width="50"
             ></v-img>
           </v-btn>
         </template>
@@ -39,8 +39,8 @@
         <v-row justify="space-between">
           <v-col cols="12" class="d-flex flex-nowrap justify-center pt-4 pb-3">
             <v-img
-              :src="require('../assets/logo.svg')"
-              contain height="35" width="50" max-width="50" class="ma-0 pa-0"
+              :src="require('../assets/logo.png')"
+              contain height="50" width="50" max-width="50" class="ma-0 pa-0 mr-4 mt-n2"
             ></v-img>
             <div class="display-1 mr-4 text-no-wrap">Johan Fanizzi</div>
           </v-col>
@@ -65,6 +65,12 @@
     </v-card>
   </v-app-bar>
 </template>
+
+<style lang="scss">
+.v-toolbar__image .v-image__image {
+  filter: hue-rotate(100deg) brightness(0.8);
+}
+</style>
 
 <script lang="ts">
 import Vue from 'vue';

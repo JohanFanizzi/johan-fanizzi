@@ -1,5 +1,5 @@
 <template>
-<v-expansion-panels dark multiple>
+<v-expansion-panels dark>
   <v-expansion-panel
     class="primary"
     v-for="(project, index) in projects" :key="index"

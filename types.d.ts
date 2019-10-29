@@ -1,6 +1,6 @@
 declare namespace Express {
   export interface Request {
-    userId: string;
+    UserId: string;
     filter: {};
     select: {};
     populate: {
