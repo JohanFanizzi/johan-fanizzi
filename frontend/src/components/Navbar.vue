@@ -40,7 +40,7 @@
           <v-col cols="12" class="d-flex flex-nowrap justify-center pt-4 pb-3">
             <v-img
               :src="require('../assets/logo.png')"
-              contain height="50" width="50" max-width="50" class="ma-0 pa-0 mr-4 mt-n2"
+              contain height="50" width="50" max-width="50" class="ma-0 pa-0 mx-3 mt-n2"
             ></v-img>
             <div class="display-1 mr-4 text-no-wrap">Johan Fanizzi</div>
           </v-col>
