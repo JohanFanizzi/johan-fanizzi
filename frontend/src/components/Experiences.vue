@@ -9,7 +9,7 @@
         <div style="width: 100%">
           {{ experience.position }}
         </div>
-        <div style="width: 100%" class="pa-2 subtitle-2">
+        <div style="width: 100%;" class="pa-2 subtitle-2">
           {{ experience.company }} - {{ getDateString(new Date(experience.dateStart)) }} - {{ experience.dateEnd ? getDateString(new Date(experience.dateEnd)) : 'Actualidad' }}
         </div>
       </v-card-title>

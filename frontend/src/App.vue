@@ -9,6 +9,9 @@
         <v-content class="pa-0 mt-2">
           <router-view/>
         </v-content>
+
+        <GoTop></GoTop>
+
       </v-container>
     </v-sheet>
 
@@ -19,8 +22,17 @@
 </template>
 
 <style lang="scss">
+// Modificación de estilos base
 .v-application{
   background-color: var(--v-secondary-base) !important;
+}
+
+.v-card__title {
+  word-break: break-word;
+}
+
+.v-list-item__title, .v-list-item__subtitle {
+  white-space: pre-line;
 }
 
 // Ancho del scroll
@@ -45,6 +57,7 @@ import { mapActions } from 'vuex';
 import Navbar from './components/Navbar.vue';
 import Networks from './components/Networks.vue';
 import FilterPanel from './components/FilterPanel.vue';
+import GoTop from './components/GoTop.vue';
 
 export default Vue.extend({
   name: 'App',
@@ -52,15 +65,16 @@ export default Vue.extend({
     Navbar,
     Networks,
     FilterPanel,
+    GoTop,
   },
   data: () => ({
     //
   }),
-  created() {
-    this.loadNetworks();
-  },
   methods: {
     ...mapActions(['loadNetworks']),
+  },
+  created() {
+    this.loadNetworks();
   },
 });
 </script>

@@ -9,7 +9,7 @@
         {{ education.degree }}
       </v-card-title>
       <v-card-text>
-        <v-list-item two-line>
+        <v-list-item>
           <v-list-item-content>
             <v-list-item-title>
               {{ getDateString(new Date(education.dateStart)) }} - {{ education.dateEnd ? getDateString(new Date(education.dateEnd)) : 'Actualidad' }} - {{ education.institution }}
